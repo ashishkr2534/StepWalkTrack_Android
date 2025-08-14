@@ -60,6 +60,16 @@ class StepProgressView @JvmOverloads constructor(
         textAlign = Paint.Align.LEFT
     }
 
+    // Glow effect
+    private val glowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.FILL
+        color = Color.CYAN
+        //color = Color.parseColor("#E744BD80")
+        maskFilter = BlurMaskFilter(15f, BlurMaskFilter.Blur.NORMAL)
+    }
+    private var pulseAlpha = 0
+    private var pulseAnimator: ValueAnimator? = null
+
     init {
         val ta = context.theme.obtainStyledAttributes(attrs, R.styleable.StepProgressView, 0, 0)
         try {
@@ -115,7 +125,7 @@ class StepProgressView @JvmOverloads constructor(
             progressWidth / 2, progressWidth / 2, bgPaint
         )
 
-        // Gradient
+        // Gradient progress fill
         val shader = LinearGradient(
             centerX, barBottom,
             centerX, barTop,
@@ -125,7 +135,6 @@ class StepProgressView @JvmOverloads constructor(
         )
         progressPaint.shader = shader
 
-        // Progress
         val progressHeight = (currentSteps.toFloat() / maxSteps) * barHeight
         val progressTop = barBottom - progressHeight
         canvas.drawRoundRect(
@@ -137,9 +146,28 @@ class StepProgressView @JvmOverloads constructor(
             progressPaint
         )
 
-        // Milestones
+        // Draw milestones with glow
         milestones.forEach { milestone ->
             val yPos = barBottom - (milestone.step.toFloat() / maxSteps) * barHeight
+
+            val distance = milestone.step - currentSteps
+            val distanceFactor = when {
+                distance <= 0 -> 0f
+                distance < 10 -> 1f
+                distance < 30 -> 0.6f
+                distance < 50 -> 0.3f
+                else -> 0f
+            }
+
+//            if (distanceFactor > 0f) {
+//                glowPaint.alpha = (pulseAlpha * distanceFactor).toInt().coerceIn(0, 255)
+//                canvas.drawCircle(centerX, yPos, progressWidth * 1.2f, glowPaint)
+//            }
+            if (distanceFactor > 0f) {
+                glowPaint.color = milestone.markerColor ?: markerColor
+                glowPaint.alpha = (pulseAlpha * distanceFactor).toInt().coerceIn(0, 255)
+                canvas.drawCircle(centerX, yPos, progressWidth * 1.2f, glowPaint)
+            }
 
             val drawableToUse = milestone.markerDrawable ?: markerDrawable
             val colorToUse = milestone.markerColor ?: markerColor
@@ -173,6 +201,13 @@ class StepProgressView @JvmOverloads constructor(
     }
 
     fun setSteps(steps: Int, animate: Boolean = true) {
+        val closest = milestones.minOfOrNull { Math.abs(it.step - steps) } ?: Int.MAX_VALUE
+        if (closest < 50 && steps < maxSteps) {
+            startPulseAnimation()
+        } else {
+            stopPulseAnimation()
+        }
+
         if (animate) {
             ValueAnimator.ofInt(currentSteps, steps).apply {
                 duration = 500
@@ -212,4 +247,24 @@ class StepProgressView @JvmOverloads constructor(
             invalidate()
         }
     }
+
+    private fun startPulseAnimation() {
+        if (pulseAnimator?.isRunning == true) return
+        pulseAnimator = ValueAnimator.ofInt(50, 255).apply {
+            duration = 800
+            repeatMode = ValueAnimator.REVERSE
+            repeatCount = ValueAnimator.INFINITE
+            addUpdateListener {
+                pulseAlpha = it.animatedValue as Int
+                invalidate()
+            }
+            start()
+        }
+    }
+
+    private fun stopPulseAnimation() {
+        pulseAnimator?.cancel()
+        pulseAnimator = null
+    }
 }
+
