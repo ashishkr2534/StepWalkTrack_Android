@@ -13,22 +13,9 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-//class StepWalkActivity : AppCompatActivity() {
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        enableEdgeToEdge()
-//        setContentView(R.layout.activity_step_walk)
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-//            insets
-//        }
-//    }
-//}
-
 class StepWalkActivity : AppCompatActivity() {
 
-//    private lateinit var binding: ActivityStepWalkTrackBinding
+//  private lateinit var binding: ActivityStepWalkTrackBinding
     private  lateinit var binding: ActivityStepWalkBinding
     private var incrementJob: Job? = null
     private var currentSteps = 0
@@ -53,9 +40,16 @@ class StepWalkActivity : AppCompatActivity() {
         binding.stepsTrack.setMaxSteps(maxSteps)
         //binding.stepsTrack.(milestoneData.map { it.first })
         binding.stepsTrack.setMilestones(milestoneData)
-// Show loader
+
+        //Show loader
 //        binding.heartLoader.visibility = View.VISIBLE
 //        binding.tvHeartVal.visibility = View.GONE
+//
+//        binding.spo2Loader.visibility = View.VISIBLE
+//        binding.tvSpo2Val.visibility = View.GONE
+//
+//        binding.cadenceLoader.visibility = View.VISIBLE
+//        binding.tvCadenceVal.visibility = View.GONE
 
 
         incrementSteps()
@@ -78,19 +72,19 @@ class StepWalkActivity : AppCompatActivity() {
         binding.tvStepsCount.text = currentSteps.toString()
 
         // Description update
-        when {
-            currentSteps < milestoneData[0].first -> binding.tvStepsDescription.text =
-                "Just a few more steps to reveal your ${milestoneData[0].second}"
-
-            currentSteps < milestoneData[1].first -> binding.tvStepsDescription.text =
-                "${milestoneData[0].second} unlocked, keep going to unlock ${milestoneData[1].second}"
-
-            currentSteps < milestoneData[2].first -> binding.tvStepsDescription.text =
-                "${milestoneData[1].second} unlocked, keep going to unlock ${milestoneData[2].second}"
-
-            else -> binding.tvStepsDescription.text =
-                "${milestoneData[2].second} unlocked. Great job!"
-        }
+//        when {
+//            currentSteps < milestoneData[0].first -> binding.tvStepsDescription.text =
+//                "Just a few more steps to reveal your ${milestoneData[0].second}"
+//
+//            currentSteps < milestoneData[1].first -> binding.tvStepsDescription.text =
+//                "${milestoneData[0].second} unlocked, keep going to unlock ${milestoneData[1].second}"
+//
+//            currentSteps < milestoneData[2].first -> binding.tvStepsDescription.text =
+//                "${milestoneData[1].second} unlocked, keep going to unlock ${milestoneData[2].second}"
+//
+//            else -> binding.tvStepsDescription.text =
+//                "${milestoneData[2].second} unlocked. Great job!"
+//        }
 
         // Change milestone icon/color when reached
         milestoneData.forEachIndexed { index, (step, _) ->
@@ -101,9 +95,39 @@ class StepWalkActivity : AppCompatActivity() {
                     ContextCompat.getDrawable(this, R.drawable.checkcircle)
                 )
 
-
                 // binding.stepsTrack.setMilestoneColor(index, ContextCompat.getColor(this, R.color.green))
                 //showMilestoneSequence(label, value, R.drawable.bg_heart_health)
+            }
+        }
+
+        when {
+            currentSteps < milestoneData[0].first -> {
+                // Heart loader visible
+                binding.heartLoader.visibility = View.VISIBLE
+                binding.tvHeartVal.visibility = View.GONE
+
+            }
+            currentSteps in milestoneData[0].first until milestoneData[1].first -> {
+                // Between first and second  Spo2 loader on
+                binding.spo2Loader.visibility = View.VISIBLE
+                binding.tvSpo2Val.visibility = View.GONE
+
+            }
+            currentSteps in milestoneData[1].first until milestoneData[2].first -> {
+                // Between second and third
+                binding.cadenceLoader.visibility = View.VISIBLE
+                binding.tvCadenceVal.visibility = View.GONE
+            }
+            else -> {
+                // All values shown
+                binding.heartLoader.visibility = View.GONE
+                binding.tvHeartVal.visibility = View.VISIBLE
+
+                binding.spo2Loader.visibility = View.GONE
+                binding.tvSpo2Val.visibility = View.VISIBLE
+
+                binding.cadenceLoader.visibility = View.GONE
+                binding.tvCadenceVal.visibility = View.VISIBLE
             }
         }
 
@@ -116,22 +140,22 @@ class StepWalkActivity : AppCompatActivity() {
                     "Heart Health" -> {
                         // When milestone reached
                         binding.tvHeartVal.text = "64"
-//                        binding.heartLoader.visibility = View.GONE
-//                        binding.tvHeartVal.visibility = View.VISIBLE
+                        binding.heartLoader.visibility = View.GONE
+                        binding.tvHeartVal.visibility = View.VISIBLE
                     }
                     "SpO₂" -> {
                         binding.tvSpo2Val.text = 98.toString()
+                        binding.spo2Loader.visibility = View.GONE
+                        binding.tvSpo2Val.visibility = View.VISIBLE
                     }
                     "Cadence" -> {
                         binding.tvCadenceVal.text = 99.toString()
+                        binding.cadenceLoader.visibility = View.GONE
+                        binding.tvCadenceVal.visibility = View.VISIBLE
                     }
                 }
 
-                Toast.makeText(
-                    this,
-                    "$label milestone reached!",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(this, "$label milestone reached!", Toast.LENGTH_SHORT).show()
 
                 val value = "${currentSteps}"
 
@@ -140,7 +164,6 @@ class StepWalkActivity : AppCompatActivity() {
                     "SpO₂" -> "%"
                     "Cadence" -> "spm"
                     else -> ""
-
                 }
 
                 val detailTitle = when (label){
@@ -149,7 +172,6 @@ class StepWalkActivity : AppCompatActivity() {
                     "Cadence" -> "Cadence is the number of steps you take in a minute"
                     else -> ""
                 }
-
                 showMilestoneSequence(label,value,unit,detailTitle)
             }
         }
