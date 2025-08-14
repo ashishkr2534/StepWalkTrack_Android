@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Background track -->
+    <item android:id="@android:id/background">
+        <shape android:shape="rectangle">
+            <corners android:radius="10dp"/>
+            <solid android:color="@color/greenGrey"/>
+        </shape>
+    </item>
+
+    <!-- Progress portion -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape android:shape="rectangle">
+                <corners android:radius="10dp"/>
+                <gradient
+                    android:startColor="@color/grey"
+                    android:centerColor="@color/teal_dark"
+                    android:endColor="@color/teal"
+                    />
+            </shape>
+        </clip>
+    </item>
+
+</layer-list>
+<!--<layer-list xmlns:android="http://schemas.android.com/apk/res/android">-->
+
+<!--    &lt;!&ndash; Background (after progress) &ndash;&gt;-->
+<!--    <item android:id="@android:id/background">-->
+<!--        <shape android:shape="rectangle">-->
+<!--            <size android:height="4dp"/> &lt;!&ndash; thinner track &ndash;&gt;-->
+<!--            <solid android:color="#444444"/>-->
+<!--            <corners android:radius="10dp"/>-->
+<!--        </shape>-->
+<!--    </item>-->
+
+<!--    &lt;!&ndash; Progress (before thumb) &ndash;&gt;-->
+<!--    <item android:id="@android:id/progress">-->
+<!--        <shape android:shape="rectangle">-->
+<!--            <size android:height="8dp"/> &lt;!&ndash; thicker progress &ndash;&gt;-->
+<!--            <gradient-->
+<!--                android:startColor="#00FFAA"-->
+<!--                android:endColor="#00FF66"-->
+<!--                android:angle="270" />-->
+<!--            <corners android:radius="10dp"/>-->
+<!--        </shape>-->
+<!--    </item>-->
+
+<!--</layer-list>-->
+

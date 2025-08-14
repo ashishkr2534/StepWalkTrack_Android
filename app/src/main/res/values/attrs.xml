@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="StepProgressView">
+        <attr name="maxSteps" format="integer" />
+        <attr name="milestones" format="string" />
+        <attr name="gradientStart" format="color" />
+        <attr name="gradientEnd" format="color" />
+        <attr name="gradientCenter" format="color" />
+        <attr name="markerColor" format="color" />
+        <attr name="markerDrawable" format="reference" />
+        <attr name="thumbDrawable" format="reference" />
+        <attr name="progressWidth" format="dimension" />
+        <attr name="topPaddingExtra" format="dimension" />
+        <attr name="bottomPaddingExtra" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="FullscreenAttrs">
+        <attr name="fullscreenBackgroundColor" format="color" />
+        <attr name="fullscreenTextColor" format="color" />
+    </declare-styleable>
+</resources>

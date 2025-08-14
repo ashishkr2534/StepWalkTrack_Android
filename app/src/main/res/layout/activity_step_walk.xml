@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".StepWalk.StepWalkActivity"
+    >
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/stepWalkAnimation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/grid" />
+
+    <com.ethos.stepwalktrack.StepWalk.StepProgressView
+        android:id="@+id/stepsTrack"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="32dp"
+        app:bottomPaddingExtra="18dp"
+        app:gradientCenter="@color/teal_dark"
+        app:gradientEnd="@color/teal_light"
+        app:gradientStart="@color/grey"
+        app:layout_constraintBottom_toTopOf="@+id/tvStepsCount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:markerColor="@color/green"
+        app:markerDrawable="@drawable/image_milestone_unchecked"
+        app:maxSteps="300"
+        app:milestones="100:Heart Health,200:Spo2,290:Cadence"
+        app:progressWidth="20dp"
+        app:thumbDrawable="@drawable/image_arrow"
+        app:topPaddingExtra="18dp" />
+
+    <!-- Cadence -->
+
+    <!-- Heart Health -->
+
+
+    <TextView
+        android:id="@+id/tvStepsCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textColor="#FAF7F7"
+        android:textSize="56sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tvStepsText"
+        app:layout_constraintEnd_toStartOf="@+id/tvStepsText"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/stepWalkAnimation"
+        app:layout_constraintTop_toTopOf="@+id/tvStepsText" />
+
+    <TextView
+        android:id="@+id/tvStepsDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:background="@color/teal_dark"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"
+        android:text="Let's start walking!"
+        android:textColor="#FAF7F7"
+        android:textSize="18sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvSpo2Val"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/circle_measuring"
+        android:gravity="center"
+        android:text="--"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView11"
+        app:layout_constraintEnd_toStartOf="@+id/tvCadenceVal"
+        app:layout_constraintStart_toEndOf="@+id/tvHeartVal" />
+
+    <TextView
+        android:id="@+id/tvHeartVal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginBottom="80dp"
+        android:background="@drawable/circle_measuring"
+        android:gravity="center"
+        android:text="--"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvSpo2Val"
+        app:layout_constraintStart_toStartOf="parent" />
+
+<!--    <FrameLayout-->
+<!--        android:id="@+id/heartContainer"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="6dp"-->
+<!--        android:layout_marginBottom="80dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/tvSpo2Val"-->
+<!--        app:layout_constraintStart_toStartOf="parent">-->
+
+<!--        &lt;!&ndash; Loader &ndash;&gt;-->
+<!--        <ProgressBar-->
+<!--            android:id="@+id/heartLoader"-->
+<!--            style="?android:attr/progressBarStyleSmall"-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:indeterminate="true"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:visibility="visible" />-->
+
+<!--        &lt;!&ndash; Value &ndash;&gt;-->
+<!--        <TextView-->
+<!--            android:id="@+id/tvHeartVal"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center"-->
+<!--            android:background="@drawable/circle_measuring"-->
+<!--            android:text="&#45;&#45;"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="24sp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:visibility="gone" />-->
+<!--    </FrameLayout>-->
+
+
+    <TextView
+        android:id="@+id/tvCadenceVal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="80dp"
+        android:background="@drawable/circle_measuring"
+        android:gravity="center"
+        android:text="--"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvSpo2Val" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Heart Health"
+        android:textColor="@color/teal"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@+id/tvHeartVal"
+        app:layout_constraintTop_toBottomOf="@+id/tvHeartVal" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="19dp"
+        android:layout_marginBottom="66dp"
+        android:text="SPO2"
+        android:textColor="@color/teal"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvSpo2Val" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="9dp"
+        android:text="Cadence"
+        android:textColor="@color/teal"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvCadenceVal"
+        app:layout_constraintTop_toBottomOf="@+id/tvCadenceVal" />
+
+    <TextView
+        android:id="@+id/tvStepsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="56dp"
+        android:text="Steps"
+        android:textAllCaps="true"
+        android:textColor="#FFFEFE"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvSpo2Val"
+        app:layout_constraintEnd_toStartOf="@+id/stepWalkAnimation"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvStepsCount" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
